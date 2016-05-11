@@ -1,0 +1,13 @@
+video {
+  width: 100%    !important;
+  height: auto   !important;
+}
+
+.media {
+	cursor: pointer;
+}
+
+.videothumb {
+  width: 120px;
+  height: 67px; 
+}

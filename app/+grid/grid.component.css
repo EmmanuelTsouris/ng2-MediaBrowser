@@ -1,0 +1,13 @@
+.thumbnail {
+	cursor: pointer;
+
+}
+
+.mediarow {
+	display: flex;
+    justify-content: space-between;
+}
+
+.thumbnail {
+	padding: 10px;
+}
