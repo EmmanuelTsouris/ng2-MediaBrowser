@@ -1,0 +1,40 @@
+
+<!-- Video Content Column -->
+<div class="col-md-8" *ngIf="media">
+    
+    <!-- Video Player -->
+    <video poster="media/{{media.thumbUrl}}" controls autoplay class="video">
+        <source src="media/{{media.mediaUrl}}" type="video/mp4">
+        <!--
+            Reminder: Additional Formats can be added if needed
+            <source src="movie.ogg" type="video/ogg">
+            -->
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Title -->
+    <h3>{{media.name}}</h3>
+
+    <hr>
+
+    <!-- Description -->
+    <p class="lead">{{media.description}}</p>
+
+</div>
+
+        <!-- Blog Sidebar Widgets Column -->
+<div class="col-md-4">
+
+    <!-- List Widget Well -->
+    <div *ngFor="#media of medias" (click)="gotoWatch(media)" class="media">
+        <div class="media-left media-top">
+            <img class="media-object videothumb" src="media/{{media.thumbUrl}}" alt="..." />      
+        </div>
+        <div class="media-body">
+                <h6 class="media-heading">{{media.name}}</h6>
+        </div> 
+    </div>
+
+</div>
+
+    

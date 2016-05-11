@@ -1,0 +1,50 @@
+/*!
+ * ng2-MediaBrowser
+ */
+
+body {
+    padding-top: 80px;
+}
+
+.container { 
+    width: auto; 
+}
+
+footer {
+    margin: 60px 0;
+}
+
+/*!
+ * Based on SpinKit v3.3.6 (http://tobiasahlin.com/spinkit/)
+ * Copyright (c) 2015 Tobias Ahlin
+ * Licensed under MIT (https://github.com/tobiasahlin/SpinKit/blob/master/LICENSE)
+ */
+
+.spinner {
+  width: 160px;
+  height: 90px;
+  background-color: #666;
+
+  margin: 100px auto;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes sk-rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
