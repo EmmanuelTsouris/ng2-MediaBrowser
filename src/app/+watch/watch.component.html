@@ -26,7 +26,7 @@
 <div class="col-md-4">
 
     <!-- List Widget Well -->
-    <div *ngFor="#media of medias" (click)="gotoWatch(media)" class="media">
+    <div *ngFor="let media of medias" (click)="gotoWatch(media)" class="media">
         <div class="media-left media-top">
             <img class="media-object videothumb" src="media/{{media.thumbUrl}}" alt="..." />      
         </div>
