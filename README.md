@@ -108,7 +108,7 @@ An example rule for this Angular2 application
         </rewrite>
 ```
 
-##Example of a working web.config (includes server side caching config)
+##Example of a working web.config (includes server side caching)
 ```
 <?xml version="1.0" encoding="utf-8"?>
 <!--
