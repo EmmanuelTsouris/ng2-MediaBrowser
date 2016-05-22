@@ -42,3 +42,114 @@ Navigate to `http://localhost:4200/`. The app will automatically reload if you c
 ## Add Video Files
 
 Place your mp4 videos in the media folder, and update the list.json with details. For a production application you might use a backend REST api to provide the list of videos, you can update the Url in the *media.service* service.
+
+#Appendix: Running Angular 2 Apps on Windows 2008 with IIS 7
+
+##Allowing the Plus (+) character in a URL for Angular2 html5 Routing
+By default, IIS 7 denies requests with certain characters in the URL. The plus (+) sign is one of those illegal characters. You can disable the setting for your web app using the web.config, basically setting allowDoubleEscaping to true.
+ 
+Before making this change in production, be sure to research and understand the security implications for your specific environment, server, and web application.
+ 
+Example location in web.config
+```
+<configuration>
+  <system.webServer>
+    <security>
+            <requestFiltering allowDoubleEscaping="true" />
+    </security>
+</system.webServer>
+</configuration>
+```
+[Learn more about requestFiltering](https://www.iis.net/configreference/system.webserver/security/requestfiltering)
+ 
+Attribute
+Description
+allowDoubleEscaping
+Optional Boolean attribute.
+ 
+If set to true, request filtering will allow URLs with doubly-escaped characters. If set to false, request filtering will deny the request if characters that have been escaped twice are present in URLs.
+ 
+The default value is false.
+ 
+ 
+##Enable Json file download
+Windows 2008 IIS 7 doesn't usually let you download a json file with the default configuration. You'll receive a 404 error, and need to add a mime type to handle the file extension. Adding a mime type can be done through the IIS console, or simply by editing the web.config.
+ 
+Example location in web.config
+```
+<configuration>
+  <system.webServer>
+    <staticContent>
+      <mimeMap fileExtension=".json" mimeType="application/json" />
+    </staticContent>
+  </system.webServer>
+</configuration>
+```
+
+##URL rewrite and Routing
+Another challenge with running Angular2 on Windows 2008 with IIS is the component router and the default html5 routes.
+
+For URL rewriting, you'll need the rewrite module.
+http://www.iis.net/learn/extensions/url-rewrite-module/creating-rewrite-rules-for-the-url-rewrite-module
+ 
+An example rule for this Angular2 application
+```
+        <rewrite>
+          <rules>
+            <rule name="Main Rule" stopProcessing="true">
+                    <match url=".*" />
+                    <conditions logicalGrouping="MatchAll">
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                    </conditions>
+                    <action type="Rewrite" url="index.html" />
+                </rule>
+            </rules>
+        </rewrite>
+```
+
+##Example of a working web.config (includes server side caching config)
+```
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <system.web>
+    <compilation debug="true" targetFramework="4.5" />
+    <httpRuntime targetFramework="4.5" />
+  </system.web>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+    <security>
+      <requestFiltering allowDoubleEscaping="true" />
+    </security>
+    <staticContent>
+            <remove fileExtension=".map" />
+      <mimeMap fileExtension=".json" mimeType="application/json" />
+            <mimeMap fileExtension=".map" mimeType="application/json" />
+            <clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="7.00:00:00" />
+    </staticContent>
+        <rewrite>
+          <rules>
+            <rule name="Main Rule" stopProcessing="true">
+                    <match url=".*" />
+                    <conditions logicalGrouping="MatchAll">
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+                    </conditions>
+                    <action type="Rewrite" url="index.html" />
+                </rule>
+            </rules>
+        </rewrite>
+        <caching>
+            <profiles>
+                <add extension=".css" policy="CacheUntilChange" kernelCachePolicy="CacheUntilChange" />
+                <add extension=".html" policy="CacheUntilChange" kernelCachePolicy="CacheUntilChange" duration="00:00:30" />
+                <add extension=".js" policy="CacheUntilChange" kernelCachePolicy="CacheUntilChange" duration="00:00:30" />
+            </profiles>
+        </caching>
+  </system.webServer>
+</configuration>
+```
