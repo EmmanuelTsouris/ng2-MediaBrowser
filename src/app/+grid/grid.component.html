@@ -3,7 +3,7 @@
     <div *ngFor="let i of rows;" class="row mediarow">
         <div *ngFor="let media of mediaFiles | slice:(i*4):(i+1)*4" (click)="gotoWatch(media)" class="col-md-3 thumbnail">
             <img src="media/{{media.thumbUrl}}" alt="..." />
-            <h4>{{media.name}}</h4>
+            <h5>{{media.name}}</h5>
         </div>
     </div>
 </div>

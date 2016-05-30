@@ -1,13 +1,14 @@
 .thumbnail {
 	cursor: pointer;
-
+	padding: 10px;
+	border: 0;
 }
 
 .mediarow {
-	display: flex;
     justify-content: space-between;
 }
 
-.thumbnail {
-	padding: 10px;
+.media-title {
+	font-size: 13px;
+	font-weight: bold;
 }
